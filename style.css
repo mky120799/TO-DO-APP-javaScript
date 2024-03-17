@@ -1,0 +1,69 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *::after, *::before {
+    box-sizing: inherit;
+}
+
+:root{
+    --light-grey :#7284a1;
+}
+
+.input-section {
+    gap: 2rem;
+    margin-top: 2rem;
+    display: flex; /* Ensure flexbox behavior */
+}
+
+.todo-input {
+    flex-basis: 60%;
+}
+
+.list-todo-heading > div {
+    /* border: 1px dashed black; */
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    display: flex; /* Ensure flexbox behavior */
+    align-items: center; /* Align items vertically */
+}
+
+.todo-no {
+    flex-basis: 3%;
+}
+
+.todo-detail {
+    flex-basis: 55%;
+}
+
+.todo-status {
+    flex-basis: 20%;
+}
+
+.todo-action {
+    flex-basis: 15%;
+}
+
+.todo-actions button {
+    padding-bottom: 0.7rem;
+    padding-top: 0.7rem;
+    /* Add any other styles as needed */
+}
+
+
+.todo-items > div {
+    /* border: 1px dashed black; */
+    /* font-weight: bold; */
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    display: flex; /* Ensure flexbox behavior */
+    align-items: center; /* Align items vertically */
+}
+
+.todo-items .todo-no{
+    color: black;
+}
+
