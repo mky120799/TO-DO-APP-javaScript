@@ -1,4 +1,25 @@
 let todoDataSection = document.getElementById('todo-data');
+let saveButton = document.getElementById('save-todo');
+let todoInputBar = document.getElementById('todo-input-bar');
+
+todoInputBar.addEventListener('input', function toggleSaveButton(){
+    let todotext = todoInputBar.value;
+    if(todotext.length == 0){
+        if(!saveButton.classList.contains('disabled')) {
+            saveButton.classList.add("disabled");
+        }
+    }
+    else if(saveButton.classList.contains("disabled")){
+        saveButton.classList.remove("disabled");
+    }
+});
+
+saveButton.addEventListener('click',function getTextAndTodo(){
+    let todotext = todoInputBar.value;
+    if(todotext.length == 0) return;
+    addTodo(todotext);
+    todoInputBar.value='';
+});
 
 function addTodo(todoData){
     let rowDiv = document.createElement('div');
@@ -11,7 +32,7 @@ function addTodo(todoData){
     let finishedButton = document.createElement('button');
     let hr = document.createElement('hr');
     //adding classes
-    rowDiv.classList.add("row")
+    rowDiv.classList.add("row");
     todoItem.classList.add("todo-items", "d-flex", "flex-row", "justify-content-between", "align-items-center");
     todoNumber.classList.add('todo-no');
     todoDetail.classList.add("todo-detail", "text-muted");
@@ -32,7 +53,7 @@ function addTodo(todoData){
 
     todoItem.appendChild(todoNumber);
     todoItem.appendChild(todoDetail);
-    todoItem.appendChild(todoSatatus)
+    todoItem.appendChild(todoSatatus);
     todoItem.appendChild(todoActions);
 
 
@@ -41,7 +62,4 @@ function addTodo(todoData){
     todoDataSection.appendChild(hr);
 }
 
-// Call addTodo with the todoData parameter
-console.log("JavaScript code is working"); // Just a log to ensure script execution
-console.log("JavaScript code is working"); 
 
