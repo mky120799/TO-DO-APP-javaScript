@@ -4,6 +4,12 @@ let todos = [];
 // Get reference to the todo data section in the HTML
 let todoDataSection = document.getElementById('todo-data');
 
+let getPendingTodosButton = document.getElementById("get-todos");
+getPendingTodosButton.addEventListener("click", ()=>{
+    todos =  todos.filter((todo)=> todo.status != "Finished");
+    reRenderTodos();
+})
+
 // Create a div element to hold the todo list
 let todoDataList = document.createElement('div');
 todoDataList.classList.add('todo-data-list');
@@ -78,6 +84,41 @@ function finishTodo(event) {
     saveTodosToLocalStorage();
 }
 
+function editTodo(event){
+     let editeButtonPressed = event.target;
+     console.log(editeButtonPressed)
+     let indexToEdit = Number(editeButtonPressed.getAttribute("todo-idx"));
+     console.log(indexToEdit);
+     let detailDiv = document.querySelector(`div[todo-idx="${indexToEdit}"]`);
+     console.log(detailDiv);
+     let input = document.querySelector(`input[todo-idx="${indexToEdit}"]`);
+
+     console.log(input);
+     detailDiv.style.display="none";
+     input.type = "text";
+     input.value = detailDiv.textContent;
+
+
+     
+}
+
+function saveEdittedTodo(event){
+    let input = event.target;
+    // console.log(event.keyCode);
+    let indexToEdit = Number(input.getAttribute("todo-idx"));
+    // console.log(indexToEdit);
+    let detailDiv = document.querySelector(`div[todo-idx="${indexToEdit}"]`);
+    // console.log(detailDiv);
+    // let input = document.querySelector(`input[todo-idx="${indexToEdit}"]`);
+
+    console.log(input);
+    if(event.keyCode==13){
+    detailDiv.textContent = input.value;
+    detailDiv.style.display="block";
+    input.type="hidden";
+    }
+}
+
 // Function to add todo
 function addTodo(todo, todoCount) {
     let rowDiv = document.createElement('div');
@@ -88,6 +129,8 @@ function addTodo(todo, todoCount) {
     let todoActions = document.createElement('div');
     let deleteButton = document.createElement('button');
     let finishedButton = document.createElement('button');
+    let editeButton = document.createElement('button');
+    let hiddenInput = document.createElement('input');
     let hr = document.createElement('hr');
 
     rowDiv.classList.add("row");
@@ -98,21 +141,37 @@ function addTodo(todo, todoCount) {
     todoActions.classList.add("todo-actions", "d-flex", "justify-content-start", "gap-2");
     deleteButton.classList.add("btn","btn-danger", "delete-todo");
     finishedButton.classList.add("btn","btn-success", "finish-todo");
+    editeButton.classList.add("btn","btn-warning", "finish-todo");
+    hiddenInput.classList.add("form-control", "todo-detail");
+    // console.log(todoCount);
+
     deleteButton.setAttribute("todo-idx", todoCount - 1);
     finishedButton.setAttribute("todo-idx", todoCount - 1);
+    editeButton.setAttribute('todo-idx', todoCount-1);
+    todoDetail.setAttribute('todo-idx',todoCount-1);
+    hiddenInput.setAttribute('todo-idx', todoCount-1 );
+    hiddenInput.addEventListener("keypress",saveEdittedTodo);
+    
+    
     deleteButton.onclick = removeTodo;
     finishedButton.onclick = finishTodo;
+    editeButton.onclick = editTodo;
+    hiddenInput.type = "hidden";
+
 
     todoNumber.textContent = `${todoCount}`;
     todoDetail.textContent = todo.text;
     todoSatatus.textContent = todo.status;
     deleteButton.textContent = 'Delete';
+    editeButton.textContent = 'Edite'
     finishedButton.textContent = todo.finishedButtonText;
 
     todoActions.appendChild(deleteButton);
     todoActions.appendChild(finishedButton);
+    todoActions.appendChild(editeButton);
 
     todoItem.appendChild(todoNumber);
+    todoItem.appendChild(hiddenInput);
     todoItem.appendChild(todoDetail);
     todoItem.appendChild(todoSatatus);
     todoItem.appendChild(todoActions);
